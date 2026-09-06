@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paul Nguyen — Veteran Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0b;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --text-primary: #e4e4e7;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent: #3b82f6;
+      --accent-dim: rgba(59,130,246,0.12);
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* subtle grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* glow orb */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 720px;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ─── Profile ─── */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--surface);
+    }
+
+    .info h1 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+
+    .info .tagline {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── Links ─── */
+    .links {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 2.75rem;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .links a:hover { color: var(--accent); }
+
+    .links svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ─── Section label ─── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── Project cards ─── */
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .project {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      transition: background 0.25s, border-color 0.25s;
+      cursor: default;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    a.project:hover {
+      background: var(--surface-hover);
+      border-color: rgba(59,130,246,0.2);
+    }
+
+    .project-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    .project-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .project-tech {
+      margin-top: 0.65rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .project-tech span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .footer .dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: #22c55e;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 520px) {
+      .profile { gap: 1rem; }
+      .avatar { width: 56px; height: 56px; }
+      .info h1 { font-size: 1.15rem; }
+      .links { gap: 0.75rem; }
+      .project { padding: 1rem 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Profile -->
+  <div class="profile">
+    <img
+      class="avatar"
+      src="https://github.com/benteckxyz.png"
+      alt="Paul Nguyen"
+      onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 72 72%22><rect fill=%22%2318181b%22 width=%2272%22 height=%2272%22 rx=%2236%22/><text x=%2236%22 y=%2244%22 text-anchor=%22middle%22 fill=%22%2371717a%22 font-size=%2228%22 font-family=%22monospace%22>P</text></svg>'"
+    />
+    <div class="info">
+      <h1>Paul Nguyen</h1>
+      <div class="tagline">// veteran engineer &bull; ho chi minh city</div>
+    </div>
+  </div>
+
+  <!-- Contact & Social -->
+  <div class="links">
+    <a href="mailto:paul@benteck.xyz">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>
+      paul@benteck.xyz
+    </a>
+    <a href="https://github.com/benteckxyz" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      github.com/benteckxyz
+    </a>
+  </div>
+
+  <!-- Projects -->
+  <div class="section-label">Selected Projects</div>
+
+  <div class="projects">
+
+    <a class="project" href="https://github.com/benteckxyz/agy-openai-proxy" target="_blank" rel="noopener">
+      <div class="project-header">
+        <span class="project-name">agy-openai-proxy</span>
+        <span class="project-tag">active</span>
+      </div>
+      <p class="project-desc">
+        OpenAI-compatible API proxy for Antigravity CLI — supports vision, streaming, multi-turn, and 8 models.
+      </p>
+      <div class="project-tech">
+        <span>Python</span>
+        <span>FastAPI</span>
+        <span>AI / CLI</span>
+      </div>
+    </a>
+
+    <a class="project" href="https://github.com/benteckxyz/video-upscale" target="_blank" rel="noopener">
+      <div class="project-header">
+        <span class="project-name">video-upscale</span>
+        <span class="project-tag">active</span>
+      </div>
+      <p class="project-desc">
+        AI Video Upscaler using Real-ESRGAN — upscale videos to 2x or 4x resolution with high fidelity.
+      </p>
+      <div class="project-tech">
+        <span>Python</span>
+        <span>Real-ESRGAN</span>
+        <span>Computer Vision</span>
+      </div>
+    </a>
+
+    <a class="project" href="https://github.com/benteckxyz/ytdown" target="_blank" rel="noopener">
+      <div class="project-header">
+        <span class="project-name">ytdown</span>
+        <span class="project-tag">stable</span>
+      </div>
+      <p class="project-desc">
+        YouTube video downloader desktop app built with Electron + yt-dlp. Modern dark UI, supports MP3 & 4K.
+      </p>
+      <div class="project-tech">
+        <span>Electron</span>
+        <span>JavaScript</span>
+        <span>yt-dlp</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="dot"></span> available for collaboration
+  </div>
+
+</div>
+
+</body>
+</html>
